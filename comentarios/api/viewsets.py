@@ -7,19 +7,3 @@ from .serializers import ComentarioSerializer
 class ComentariosViewSet(viewsets.ModelViewSet):
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
-
-    @action(detail=True, methods=['post'])
-    def toggle_reaction(self, request, pk=None):
-        comentario = self.get_object()
-        user = request.user
-
-        if user in comentario.likes.all():
-            comentario.dislike.remove(user)
-        elif user in comentario.dislikes.all():
-            comentario.like.remove(user)
-        else:
-            comentario.likes.add(user)
-
-        comentario.save()
-        serializer = self.get_serializer(comentario)
-        return Response(serializer.data)
