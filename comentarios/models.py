@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Comentario(models.Model):
@@ -21,7 +20,3 @@ class Comentario(models.Model):
         return self.dislikes.count()
 
 
-class Estrela(models.Model):
-    comentario = models.ForeignKey(Comentario, on_delete=models.CASCADE, related_name='estrelas')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    estrelas = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(5.0)])
